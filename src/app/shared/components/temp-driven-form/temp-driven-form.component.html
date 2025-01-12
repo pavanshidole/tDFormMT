@@ -1,1 +1,97 @@
-<p>temp-driven-form works!</p>
+<div class="row">
+    <div class="col-md-6 mb-4 mb-md-0">
+        <div class="card">
+            <div class="card-body">
+                <form #signUp="ngForm" (ngSubmit)="onSignUp()">
+                    <div #userInfo="ngModelGroup" ngModelGroup="userInfo">
+                        <div class="form-group">
+                            <label for="username">username*</label>
+                            <input type="text" id="username" name="username" required ngModel class="form-control" pattern="[a-zA-Z]+" #username="ngModel">
+    
+                            <strong 
+                            *ngIf="username.touched && username.hasError('required')"
+                            class="text-danger">
+                                username is a required error !!!
+                            </strong>
+    
+                            <strong 
+                            *ngIf="username.dirty && username.hasError('pattern')"
+                            class="text-danger">
+                                username shouldn't have input number and special character !!
+                            </strong>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">email*</label>
+                            <input type="text" id="email" name="email"
+                             required ngModel class="form-control" pattern="[a-z0-9._%+\-]+@[a-z0-9.-]+\.[a-z]{2,}" #email="ngModel">
+    
+                            <strong 
+                            *ngIf="email.touched && email.hasError('required')"
+                            class="text-danger">
+                                email is a required error !!!
+                            </strong>
+                            
+                            <strong 
+                            *ngIf="email.dirty && email.hasError('pattern')"
+                            class="text-danger">
+                                email pattern should be fill ex:({{'abc@gmail.com'}})
+                            </strong>
+                        </div>
+
+                        <strong 
+                        *ngIf="userInfo.touched && userInfo.invalid"
+                        class="bg-danger p-1 text-white">
+                            userInfo is a required error
+                        </strong>
+                    </div>
+                    <div class="form-group">
+                        <label for="secrectquestion">secrectquestion*</label>
+                        <select name="secrectquestion" ngModel #secrectquestion="ngModel" id="secrectquestion" class="form-control" required="">
+                            <option value="favourateplayer">favourateplayer</option>
+                            <option value="favouratesport">favouratesport</option>
+                        </select>
+
+                        <strong 
+                        *ngIf="secrectquestion.touched && secrectquestion.hasError('required')"
+                        class="text-danger">
+                        secrectquestion is a required error !!!
+                        </strong>
+                    </div>
+                    <div class="form-group">
+                        <label for="answer">answer*</label>
+                        <input type="text" id="answer" name="answer" class="form-control" #answeer="ngModel" ngModel required>
+
+                        <strong 
+                        *ngIf="answeer.touched && answeer.hasError('required')"
+                        class="text-danger">
+                        answeer is a required error !!!
+                        </strong>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="checkbox" id="subscribe" ngModel name="subscribe" >
+                        <label for="subscribe">subscribe</label> &nbsp;
+                    </div>
+
+                    <div class="form-group" *ngFor="let moc of mocArr">
+                        <input
+                        type="radio" name="contact" id="{{moc.modContact}}" ngModel value="{{moc.modContact}}">
+                        <label for="{{moc.modContact}}">{{moc.modContact}}</label> &nbsp;
+
+                    </div>
+
+                    <button type="submit" class="btn btn-sm btn-block btn-outline-success">signUp</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+
+        <div>
+            <button (click)="onPatchval()" class="btn btn-sm btn-outline-warning">patch value in form</button> 
+        </div>
+        isValid:{{signUp.valid}} <br>
+        isInvalid:{{signUp.invalid}} <br>
+        isvalue:{{signUp.value | json}}
+    </div>
+</div>
